@@ -1,6 +1,7 @@
 import * as THREE from '/build/three.module.js';
 import Stats from './jsm/libs/stats.module.js';
 import { OrbitControls } from './jsm/controls/OrbitControls.js';
+import { Texture } from 'three';
 console.log(THREE);
 console.log(OrbitControls);
 
@@ -40,25 +41,49 @@ console.log(renderer);
 // Adding orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
-// making sphere
-const geometry = new THREE.SphereGeometry(5, 10, 10);
-const material = new THREE.MeshBasicMaterial({
-    color: 0xE6345E,
-    wireframe: true
-});
-const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
+// // making sphere
+// const geometry = new THREE.SphereGeometry(5, 10, 10);
+// const material = new THREE.MeshBasicMaterial({
+//     color: 0xE6345E,
+//     wireframe: true
+// });
+// const sphere = new THREE.Mesh(geometry, material);
+// scene.add(sphere);
 
-// making inner sphere
-const innerGeometry = new THREE.SphereGeometry(3, 20, 20);
-const innerMaterial = new THREE.MeshBasicMaterial({
-    color: 0xE6DD67,
-    wireframe: true
-});
-const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
-scene.add(innerSphere);
+// // making inner sphere
+// const innerGeometry = new THREE.SphereGeometry(3, 20, 20);
+// const innerMaterial = new THREE.MeshBasicMaterial({
+//     color: 0xE6DD67,
+//     wireframe: true
+// });
+// const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
+// scene.add(innerSphere);
 
 // render function to render the scene
+
+let loader              =       new THREE.TextureLoader();
+
+let textureArray        =       [];
+
+let frontTexture        =       loader.load('./model/MariottMadisonWest/front.jpg');
+let backTexture         =       loader.load('./model/MariottMadisonWest/back.jpg');
+let bottomTexture       =       loader.load('./model/MariottMadisonWest/bottom.jpg');
+let leftTexture         =       loader.load('./model/MariottMadisonWest/left.jpg');
+let rightTexture        =       loader.load('./model/MariottMadisonWest/right.jpg');
+let topTexture          =       loader.load('./model/MariottMadisonWest/top.jpg');
+
+textureArray.push(new THREE.MeshBasicMaterial({ map : frontTexture }));
+textureArray.push(new THREE.MeshBasicMaterial({ map : backTexture }));
+textureArray.push(new THREE.MeshBasicMaterial({ map : bottomTexture }));
+textureArray.push(new THREE.MeshBasicMaterial({ map : leftTexture }));
+textureArray.push(new THREE.MeshBasicMaterial({ map : rightTexture }));
+textureArray.push(new THREE.MeshBasicMaterial({ map : topTexture }));
+
+const cubeGeometry  =       new THREE.BoxGeometry(100 , 100 , 100);
+const skyBox        =       new THREE.Mesh(cubeGeometry , textureArray , )
+scene.add(skyBox);
+
+
 const render = ()=>{
     renderer.render(scene, camera);
 }
@@ -66,8 +91,8 @@ const render = ()=>{
 // Recursion function for animation
 const animate = ()=>{
     requestAnimationFrame(animate);
-    sphere.rotation.y += 0.005;
-    innerSphere.rotation.y -= 0.01
+    // sphere.rotation.y += 0.005;
+    // innerSphere.rotation.y -= 0.01
     render();
     stats.update();
 }
