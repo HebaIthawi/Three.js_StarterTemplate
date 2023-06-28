@@ -16,7 +16,7 @@ const scene = new THREE.Scene();
 console.log(scene);
 
 // Camera Setup
-const fov = 45;
+const fov = 35;
 const aspect = window.innerWidth / window.innerHeight;
 const near = 0.1;
 const far = 1000;
@@ -39,51 +39,48 @@ renderer.setClearColor = (0x000000, 0.0);
 console.log(renderer);
 
 // Adding orbit controls
-const controls = new OrbitControls(camera, renderer.domElement);
+let controls = new OrbitControls(camera, renderer.domElement);
 
-// // making sphere
-// const geometry = new THREE.SphereGeometry(5, 10, 10);
-// const material = new THREE.MeshBasicMaterial({
-//     color: 0xE6345E,
-//     wireframe: true
-// });
-// const sphere = new THREE.Mesh(geometry, material);
-// scene.add(sphere);
+controls.minDistance = 10;
+controls.maxDistance = 40;
 
-// // making inner sphere
-// const innerGeometry = new THREE.SphereGeometry(3, 20, 20);
-// const innerMaterial = new THREE.MeshBasicMaterial({
-//     color: 0xE6DD67,
-//     wireframe: true
-// });
-// const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
-// scene.add(innerSphere);
+// loader for loading texture
+let loader = new THREE.TextureLoader();
 
-// render function to render the scene
+// array for holding all texutre
+let textureArray = [];
 
-let loader              =       new THREE.TextureLoader();
+// all texture
+// let frontTexture = loader.load('./model/heaven/front.jpg');
+// let backTexture = loader.load('./model/MariottMadisonWest/back.jpg');
+// let topTexture = loader.load('./model/polluted_earth/top.jpg');
+// let bottomTexture = loader.load('./model/polluted_earth/bottom.jpg');
+// let rightTexture = loader.load('./model/polluted_earth/left.jpg');
+// let leftTexture = loader.load('./model/polluted_earth/right.jpg');
+let frontTexture        =       loader.load('./model/heaven/front.jpg');
+let backTexture         =       loader.load('./model/heaven/back.jpg');
+let bottomTexture       =       loader.load('./model/heaven/bottom.jpg');
+let leftTexture         =       loader.load('./model/heaven/left.jpg');
+let rightTexture        =       loader.load('./model/heaven/right.jpg');
+let topTexture          =       loader.load('./model/heaven/top.jpg');
 
-let textureArray        =       [];
+textureArray.push(new THREE.MeshBasicMaterial({map: frontTexture}));
+textureArray.push(new THREE.MeshBasicMaterial({map: backTexture}));
+textureArray.push(new THREE.MeshBasicMaterial({map: topTexture}));
+textureArray.push(new THREE.MeshBasicMaterial({map: bottomTexture}));
+textureArray.push(new THREE.MeshBasicMaterial({map: rightTexture}));
+textureArray.push(new THREE.MeshBasicMaterial({map: leftTexture}));
 
-let frontTexture        =       loader.load('./model/MariottMadisonWest/front.jpg');
-let backTexture         =       loader.load('./model/MariottMadisonWest/back.jpg');
-let bottomTexture       =       loader.load('./model/MariottMadisonWest/bottom.jpg');
-let leftTexture         =       loader.load('./model/MariottMadisonWest/left.jpg');
-let rightTexture        =       loader.load('./model/MariottMadisonWest/right.jpg');
-let topTexture          =       loader.load('./model/MariottMadisonWest/top.jpg');
+for(let i=0; i<textureArray.length; i++){
+    textureArray[i].side = THREE.BackSide;
+}
 
-textureArray.push(new THREE.MeshBasicMaterial({ map : frontTexture }));
-textureArray.push(new THREE.MeshBasicMaterial({ map : backTexture }));
-textureArray.push(new THREE.MeshBasicMaterial({ map : bottomTexture }));
-textureArray.push(new THREE.MeshBasicMaterial({ map : leftTexture }));
-textureArray.push(new THREE.MeshBasicMaterial({ map : rightTexture }));
-textureArray.push(new THREE.MeshBasicMaterial({ map : topTexture }));
-
-const cubeGeometry  =       new THREE.BoxGeometry(100 , 100 , 100);
-const skyBox        =       new THREE.Mesh(cubeGeometry , textureArray , )
+// making cube
+const cubeGeometry = new THREE.BoxGeometry(100, 100, 100);
+const skyBox = new THREE.Mesh(cubeGeometry, textureArray);
 scene.add(skyBox);
 
-
+// render function to render the scene
 const render = ()=>{
     renderer.render(scene, camera);
 }
@@ -91,8 +88,6 @@ const render = ()=>{
 // Recursion function for animation
 const animate = ()=>{
     requestAnimationFrame(animate);
-    // sphere.rotation.y += 0.005;
-    // innerSphere.rotation.y -= 0.01
     render();
     stats.update();
 }
