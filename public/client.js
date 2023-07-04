@@ -57,12 +57,12 @@ let textureArray = [];
 // let bottomTexture = loader.load('./model/polluted_earth/bottom.jpg');
 // let rightTexture = loader.load('./model/polluted_earth/left.jpg');
 // let leftTexture = loader.load('./model/polluted_earth/right.jpg');
-let frontTexture        =       loader.load('./model/heaven/front.jpg');
-let backTexture         =       loader.load('./model/heaven/back.jpg');
-let bottomTexture       =       loader.load('./model/heaven/bottom.jpg');
-let leftTexture         =       loader.load('./model/heaven/left.jpg');
-let rightTexture        =       loader.load('./model/heaven/right.jpg');
-let topTexture          =       loader.load('./model/heaven/top.jpg');
+let frontTexture        =       loader.load('./model/Vasa/front.jpg');
+let backTexture         =       loader.load('./model/Vasa/back.jpg');
+let bottomTexture       =       loader.load('./model/Vasa/bottom.jpg');
+let leftTexture         =       loader.load('./model/Vasa/left.jpg');
+let rightTexture        =       loader.load('./model/Vasa/right.jpg');
+let topTexture          =       loader.load('./model/Vasa/top.jpg');
 
 textureArray.push(new THREE.MeshBasicMaterial({map: frontTexture}));
 textureArray.push(new THREE.MeshBasicMaterial({map: backTexture}));
